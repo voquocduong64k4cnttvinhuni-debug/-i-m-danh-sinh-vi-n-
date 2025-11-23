@@ -14,6 +14,9 @@
   <style>
     body {
       background: #f1e7ff;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
     }
     .form-box {
       background: white;
@@ -22,6 +25,7 @@
       padding: 30px;
       border-radius: 10px;
       border-top: 8px solid #673ab7;
+      position: relative;
     }
     .submit-btn {
       background: #673ab7;
@@ -38,7 +42,6 @@
   <div class="form-box shadow-sm">
 
       <h4 class="mb-4 fw-bold text-center">Điểm danh sinh viên</h4>
-
 
       <form id="attendanceForm">
 
@@ -80,7 +83,32 @@
 
           <div class="form-check mt-1">
             <input class="form-check-input" type="radio" name="donvi" value="Viện Kỹ thuật và công nghệ">
-            <label class="form-check-label">Viện Kỹ thuật và công nghệ</label>
+            <label class="form-check-label">Viện Kỹ thuật và Công nghệ</label>
+          </div>
+
+          <div class="form-check mt-1">
+            <input class="form-check-input" type="radio" name="donvi" value="Viện Công nghệ hóa sinh và Môi trường">
+            <label class="form-check-label">Viện Công nghệ hóa sinh và Môi trường</label>
+          </div>
+
+          <div class="form-check mt-1">
+            <input class="form-check-input" type="radio" name="donvi" value="Viện Nông nghiệp và Tài nguyên">
+            <label class="form-check-label">Viện Nông nghiệp và Tài nguyên</label>
+          </div>
+
+          <div class="form-check mt-1">
+            <input class="form-check-input" type="radio" name="donvi" value="Khoa Sư phạm ngoại ngữ">
+            <label class="form-check-label">Khoa Sư phạm ngoại ngữ</label>
+          </div>
+
+          <div class="form-check mt-1">
+            <input class="form-check-input" type="radio" name="donvi" value="Khoa Xây dựng">
+            <label class="form-check-label">Khoa Xây dựng</label>
+          </div>
+
+          <div class="form-check mt-1">
+            <input class="form-check-input" type="radio" name="donvi" value="Trung tâm Giáo dục quốc phòng và An ninh">
+            <label class="form-check-label">Trung tâm Giáo dục quốc phòng và An ninh</label>
           </div>
 
         </div>
@@ -93,11 +121,12 @@
       </form>
   </div>
 
-
 <script>
   const inputs = document.querySelectorAll("input");
   const submitBtn = document.getElementById("submitBtn");
+  let readyToSubmit = false; // Biến xác định lần nhấn thứ 2
 
+  // Hàm validate form
   function validateForm() {
     let valid = true;
     inputs.forEach(i => {
@@ -107,15 +136,33 @@
         if (!i.value.trim()) valid = false;
       }
     });
-
     submitBtn.disabled = !valid;
   }
-
   inputs.forEach(i => i.addEventListener("input", validateForm));
 
-  document.getElementById("attendanceForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    window.location.href = "video.html";
+  const form = document.getElementById("attendanceForm");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault(); // Ngăn submit mặc định
+
+    if (!readyToSubmit) {
+      // Lần đầu nhấn: ẩn nút
+      submitBtn.style.display = 'none';
+      readyToSubmit = true;
+
+      // Thêm sự kiện click trên body để hiện nút lại
+      document.body.addEventListener("click", function showBtn(e) {
+        // Tránh nhấn lại vào chính nút đã ẩn
+        if (e.target !== submitBtn) {
+          submitBtn.style.display = 'block';
+          // Chỉ hiện 1 lần → remove event
+          document.body.removeEventListener("click", showBtn);
+        }
+      });
+    } else {
+      // Lần thứ 2: chuyển trang
+      window.location.href = "video.html";
+    }
   });
 </script>
 
