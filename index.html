@@ -42,8 +42,7 @@
 /* Khi di chuyển – KHÔNG đổi kích thước nữa */
 .center-screen,
 .top-right {
-  width: auto !important;
-  height: auto !important;
+  
   border-radius: 7px !important;
   padding: 10px 25px !important;
   font-size: 16px !important;
@@ -51,6 +50,9 @@
 
 /* Lần 1: giữa màn hình */
 .center-screen {
+  width: 100px !important;
+  height: 35px !important;
+  font-size: 10px !important;
   position: fixed !important;
   left: 50% !important;
   top: 50% !important;
@@ -60,6 +62,9 @@
 
 /* Lần 2: góc phải */
 .top-right {
+  width: 80px !important;
+  height: 30px !important;
+  font-size: 5px !important;
   position: fixed !important;
   top: 20px !important;
   right: 20px !important;
@@ -148,7 +153,7 @@
 
         <!-- Nút gửi -->
         <div class="text-center">
-  <button class="btn btn-primary submit-btn" style="width: 130px;" id="submitBtn" disabled>
+  <button class="btn btn-primary submit-btn" style="width: 130px; height: 40px; font-size: 18px;" id="submitBtn" disabled>
     Điểm danh
   </button>
 </div>
