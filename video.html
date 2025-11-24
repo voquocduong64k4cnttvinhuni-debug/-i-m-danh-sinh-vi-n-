@@ -2,34 +2,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video với tiêu đề</title>
+<title>Cảnh báo toàn màn hình</title>
 <style>
 body {
     margin: 0;
-    background: #000;
+    height: 100vh;
     display: flex;
-    flex-direction: column; /* Sắp xếp theo cột */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    color: red;
-}
-h1 {
-    margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và video */
+    color: white;
+    font-family: Arial, sans-serif;
+    animation: flash 1s infinite; /* Nháy đỏ toàn màn hình */
     text-align: center;
 }
+
+/* Nháy đỏ */
+@keyframes flash {
+    0%, 100% { background-color: #000; }
+    50% { background-color: red; }
+}
+
+h1 {
+    font-size: 40px;
+    margin: 10px 0;
+}
+
+/* Nút */
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ffffff;
+    color: red;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: #ffcccc;
+    color: #990000;
+}
+
+/* Video ẩn trước */
 video {
-    height: 70%;       /* Giảm chiều rộng xuống 80% của container */
-    max-height: 800px; /* Giới hạn tối đa */
-    width: auto;     /* Giữ tỉ lệ */
+    display: none;
+    margin-top: 20px;
+    max-width: 80%;
+    max-height: 500px;
+    width: auto;
     border-radius: 10px;
 }
 </style>
 </head>
-<body style="background-color: white; background: #f1e7ff;">
-    <h1>Thông tin của bạn đã bị đánh cắp bởi...</h1>
-    <video autoplay controls>
+<body>
+    <div>
+        <div style="font-size: 60px;">⚠️</div>
+        <h1>Thông tin của bạn đã bị đánh cắp!</h1>
+        <button id="showVideoBtn">Xem thủ phạm</button>
+    </div>
+
+    <video id="myVideo" controls>
         <source src="Video/Video2.mp4" type="video/mp4">
     </video>
+
+<script>
+const button = document.getElementById('showVideoBtn');
+const video = document.getElementById('myVideo');
+const body = document.body;
+
+button.addEventListener('click', () => {
+    // Dừng nháy đỏ
+    body.style.animation = 'none';
+    // Ẩn cảnh báo
+    button.parentElement.style.display = 'none';
+    // Hiện video và phát
+    video.style.display = 'block';
+    video.play();
+});
+</script>
 </body>
 </html>
