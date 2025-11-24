@@ -6,30 +6,37 @@
 <style>
 body {
     margin: 0;
-    background: #000;
+    background: #f1e7ff;
     display: flex;
-    flex-direction: column; /* Sắp xếp theo cột */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
     color: red;
 }
 h1 {
-    margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và video */
+    margin-bottom: 20px;
     text-align: center;
 }
 video {
-    height: 70%;       /* Giảm chiều rộng xuống 80% của container */
-    max-height: 800px; /* Giới hạn tối đa */
-    width: auto;     /* Giữ tỉ lệ */
+    height: 70%;
+    max-height: 800px;
+    width: auto;
     border-radius: 10px;
 }
 </style>
 </head>
-<body style="background-color: white; background: #f1e7ff;">
+<body>
     <h1>Thông tin của bạn đã bị đánh cắp bởi...</h1>
-    <video autoplay controls>
+    <video id="myVideo" controls>
         <source src="Video/Video2.mp4" type="video/mp4">
     </video>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        setTimeout(() => {
+            video.play(); // Bắt đầu phát sau 1 giây
+        }, 1000); // 1000ms = 1 giây
+    </script>
 </body>
 </html>
