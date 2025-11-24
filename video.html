@@ -2,15 +2,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
+<title>Video với tiêu đề</title>
 <style>
-body { margin: 0; background: #000; display: flex; align-items: center; justify-content: center; height: 100vh; }
-video { max-width: 90%; border-radius: 10px; }
+body {
+    margin: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo cột */
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: red;
+}
+h1 {
+    margin-bottom: 20px; /* Khoảng cách giữa tiêu đề và video */
+    text-align: center;
+}
+video {
+    height: 70%;       /* Giảm chiều rộng xuống 80% của container */
+    max-height: 800px; /* Giới hạn tối đa */
+    width: auto;     /* Giữ tỉ lệ */
+    border-radius: 10px;
+}
 </style>
 </head>
-<body>
-<video autoplay controls>
-<source src="Video/Video.mp4" type="video/mp4">
-</video>
+<body style="background-color: white; background: #f1e7ff;">
+    <h1>Thông tin của bạn đã bị đánh cắp bởi...</h1>
+    <video autoplay controls>
+        <source src="Video/Video2.mp4" type="video/mp4">
+    </video>
 </body>
 </html>
