@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -17,7 +18,7 @@ body {
     text-align: center;
 }
 
-/* Nháy đỏ */
+/* Nháy đỏ nền */
 @keyframes flash {
     0%, 100% { background-color: #000; }
     50% { background-color: red; }
@@ -26,6 +27,12 @@ body {
 h1 {
     font-size: 40px;
     margin: 10px 0;
+}
+
+/* Hiệu ứng phóng to thu nhỏ nút */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 /* Nút */
@@ -40,6 +47,9 @@ button {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s, color 0.3s;
+
+    /* Thêm hiệu ứng */
+    animation: pulse 1s infinite;
 }
 
 button:hover {
@@ -59,26 +69,42 @@ video {
 </style>
 </head>
 <body>
-    <div>
+    
+    <div id="warningBox">
         <div style="font-size: 60px;">⚠️</div>
         <h1>Thông tin của bạn đã bị đánh cắp!</h1>
         <button id="showVideoBtn">Xem thủ phạm</button>
     </div>
-
+    
     <video id="myVideo" controls>
         <source src="Video/Video2.mp4" type="video/mp4">
     </video>
+
+    <!-- Âm thanh cảnh báo -->
+    <audio id="alertSound" src="Audio/alert.mp3" autoplay></audio>
 
 <script>
 const button = document.getElementById('showVideoBtn');
 const video = document.getElementById('myVideo');
 const body = document.body;
+const alertSound = document.getElementById('alertSound');
+const warningBox = document.getElementById('warningBox');
+
+// Phát âm thanh khi trang tải
+window.addEventListener('load', () => {
+    alertSound.play().catch(e => console.log('Trình duyệt chặn autoplay.'));
+});
 
 button.addEventListener('click', () => {
-    // Dừng nháy đỏ
+    // Dừng nháy nền
     body.style.animation = 'none';
-    // Ẩn cảnh báo
-    button.parentElement.style.display = 'none';
+    // Dừng nháy nút
+    button.style.animation = 'none';
+    // Dừng âm thanh cảnh báo
+    alertSound.pause();
+    alertSound.currentTime = 0;
+    // Ẩn toàn bộ cảnh báo
+    warningBox.style.display = 'none';
     // Hiện video và phát
     video.style.display = 'block';
     video.play();
