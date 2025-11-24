@@ -17,7 +17,9 @@
       min-height: 100vh;
       margin: 0;
       padding: 0;
+      position: relative;
     }
+
     .form-box {
       background: white;
       max-width: 650px;
@@ -27,14 +29,44 @@
       border-top: 8px solid #673ab7;
       position: relative;
     }
+
     .submit-btn {
-      background: #673ab7;
-      border: none;
-      font-weight: 600;
-    }
-    .submit-btn:disabled {
-      opacity: .5;
-    }
+  background: #673ab7;
+  border: none;
+  font-weight: 600;
+  transition: all .3s ease;
+  position: relative;
+  width: 100%; /* nếu muốn nút ban đầu vẫn rộng full */
+}
+
+/* Khi di chuyển – KHÔNG đổi kích thước nữa */
+.center-screen,
+.top-right {
+  width: auto !important;
+  height: auto !important;
+  border-radius: 7px !important;
+  padding: 10px 25px !important;
+  font-size: 16px !important;
+}
+
+/* Lần 1: giữa màn hình */
+.center-screen {
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 999;
+}
+
+/* Lần 2: góc phải */
+.top-right {
+  position: fixed !important;
+  top: 20px !important;
+  right: 20px !important;
+  transform: none !important;
+  z-index: 999;
+}
+
   </style>
 </head>
 <body>
@@ -50,6 +82,7 @@
          <label class="form-label fw-semibold">Họ và tên <span class="text-danger">*</span></label>
          <input type="text" class="form-control" id="fullname" placeholder="Câu trả lời của bạn" required>
         </div>
+
         <!-- Lớp -->
         <div class="mb-4">
           <label class="form-label fw-semibold">Lớp <span class="text-danger">*</span></label>
@@ -67,7 +100,7 @@
           <label class="form-label fw-semibold">Đơn vị <span class="text-danger">*</span></label>
 
           <div class="form-check mt-1">
-            <input class="form-check-input" type="radio" name="donvi" value="Trường Khoa học xã hội và Nhân văn" required>
+            <input class="form-check-input" type="radio" name="donvi" required value="Trường Khoa học xã hội và Nhân văn">
             <label class="form-check-label">Trường Khoa học xã hội và Nhân văn</label>
           </div>
 
@@ -114,9 +147,11 @@
         </div>
 
         <!-- Nút gửi -->
-        <button class="btn btn-primary submit-btn w-100" id="submitBtn" disabled>
-          Điểm danh
-        </button>
+        <div class="text-center">
+  <button class="btn btn-primary submit-btn" style="width: 130px;" id="submitBtn" disabled>
+    Điểm danh
+  </button>
+</div>
 
       </form>
   </div>
@@ -124,11 +159,12 @@
 <script>
   const inputs = document.querySelectorAll("input");
   const submitBtn = document.getElementById("submitBtn");
-  let readyToSubmit = false; // Biến xác định lần nhấn thứ 2
+  let clickCount = 0;
 
-  // Hàm validate form
+  // Validate dữ liệu
   function validateForm() {
     let valid = true;
+
     inputs.forEach(i => {
       if (i.type === "radio") {
         if (!document.querySelector('input[name="donvi"]:checked')) valid = false;
@@ -136,31 +172,30 @@
         if (!i.value.trim()) valid = false;
       }
     });
+
     submitBtn.disabled = !valid;
   }
+
   inputs.forEach(i => i.addEventListener("input", validateForm));
 
   const form = document.getElementById("attendanceForm");
 
   form.addEventListener("submit", function(e) {
-    e.preventDefault(); // Ngăn submit mặc định
+    e.preventDefault();
+    clickCount++;
 
-    if (!readyToSubmit) {
-      // Lần đầu nhấn: ẩn nút
-      submitBtn.style.display = 'none';
-      readyToSubmit = true;
-
-      // Thêm sự kiện click trên body để hiện nút lại
-      document.body.addEventListener("click", function showBtn(e) {
-        // Tránh nhấn lại vào chính nút đã ẩn
-        if (e.target !== submitBtn) {
-          submitBtn.style.display = 'block';
-          // Chỉ hiện 1 lần → remove event
-          document.body.removeEventListener("click", showBtn);
-        }
-      });
-    } else {
-      // Lần thứ 2: chuyển trang
+    // Lần 1 → vào giữa, thu nhỏ thành nút tròn
+    if (clickCount === 1) {
+      submitBtn.classList.add("center-screen");
+      submitBtn.classList.remove("top-right");
+    }
+    // Lần 2 → chuyển lên góc phải và nhỏ hơn nữa
+    else if (clickCount === 2) {
+      submitBtn.classList.remove("center-screen");
+      submitBtn.classList.add("top-right");
+    }
+    // Lần 3 → chuyển trang
+    else {
       window.location.href = "video.html";
     }
   });
