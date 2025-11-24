@@ -46,12 +46,17 @@
   border-radius: 7px !important;
   padding: 10px 25px !important;
   font-size: 16px !important;
+  display: flex !important;          /* Thêm */
+  justify-content: center !important; /* Căn ngang */
+  align-items: center !important;    /* Căn dọc */
+  text-align: center !important; 
 }
 
 /* Lần 1: giữa màn hình */
 .center-screen {
-  width: 100px !important;
-  height: 35px !important;
+  white-space: nowrap !important;
+  width: 85px !important;
+  height: 30px !important;
   font-size: 10px !important;
   position: fixed !important;
   left: 50% !important;
@@ -62,8 +67,9 @@
 
 /* Lần 2: góc phải */
 .top-right {
-  width: 80px !important;
-  height: 30px !important;
+  white-space: nowrap !important;
+  width: 60px !important;
+  height: 20px !important;
   font-size: 5px !important;
   position: fixed !important;
   top: 20px !important;
